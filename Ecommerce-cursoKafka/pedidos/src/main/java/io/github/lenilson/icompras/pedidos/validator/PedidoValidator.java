@@ -8,6 +8,7 @@ import io.github.lenilson.icompras.pedidos.client.representation.ClienteRepresen
 import io.github.lenilson.icompras.pedidos.client.representation.ProdutoRepresentation;
 import io.github.lenilson.icompras.pedidos.model.ItemPedido;
 import io.github.lenilson.icompras.pedidos.model.Pedido;
+import io.github.lenilson.icompras.pedidos.model.exception.ValidationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -33,12 +34,12 @@ public class PedidoValidator {
             log.info("Cliente de código {} encontrado: {}", cliente.codigo(), cliente.nome());
 
             if(!cliente.ativo()){
-               // throw new ValidationException("codigoCliente", "Cliente Inativo.");
+                throw new ValidationException("codigoCliente", "Cliente Inativo.");
             }
 
         } catch (FeignException.NotFound e){
             var message = String.format("Cliente de código %d não encontrado.", codigoCliente);
-          //  throw new ValidationException("codigoCliente", message);
+            throw new ValidationException("codigoCliente", message);
         }
 
     }
@@ -50,12 +51,12 @@ public class PedidoValidator {
             log.info("Produto de código {} encontrado: {}", produto.codigo(), produto.nome());
 
             if(!produto.ativo()){
-//                throw new ValidationException("codigoProduto", "Produto inativo.");
+                throw new ValidationException("codigoProduto", "Produto inativo.");
             }
 
         } catch (FeignException.NotFound e){
             var message = String.format("Produto de código %d não encontrado.", item.getCodigoProduto());
-//            throw new ValidationException("codigoProduto", message);
+            throw new ValidationException("codigoProduto", message);
         }
     }
 }
