@@ -79,7 +79,7 @@ public class PedidoService {
         var pedidoEncontrado = repository.findById(codigoPedido);
 
         if(pedidoEncontrado.isEmpty()){
-            throw new ItemNaoEncontradoException("Pedido não encontrado para o código informado..");
+            throw new ItemNaoEncontradoException("Pedido não encontrado para o código informado.");
         }
 
         var pedido = pedidoEncontrado.get();
